@@ -13,10 +13,14 @@ inputSearch.oninput = () =>{
     .forEach((item) => addHTML(item))
 }
 
-function addHTML(item){
-    const div = document.createElement("div")
-    div.innerHTML = item;
-    content.append(div)
+function addHTML(item, url){
+     const div = document.createElement("div")
+    const a = document.createElement('a')
+    a.innerHTML = item 
+    a.setAttribute('href', `${url}`)
+    div.appendChild(a)
+   
+    content.appendChild(div)
 }
 
 fetch("https://dadosabertos.camara.leg.br/api/v2/deputados?ordem=ASC&ordenarPor=nome")
@@ -24,7 +28,7 @@ fetch("https://dadosabertos.camara.leg.br/api/v2/deputados?ordem=ASC&ordenarPor=
 .then((users) =>{
      console.log(users)
     users.dados.forEach((user) =>{
-        addHTML(user.nome)
+        addHTML(user.nome, user.uri)
         items.push(user.nome)
     })
 })
